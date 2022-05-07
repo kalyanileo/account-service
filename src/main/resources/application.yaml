@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:myaccountdb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    initialization-mode: always
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    spring.jpa.generate-ddl: false
+    spring.jpa.hibernate.ddl-auto: none     
+  h2:
+    console.enabled: true
+  application:
+    name: zinkworks-account-api
+
+server:
+  port: 8090
