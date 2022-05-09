@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.zinkworks.account.exception.AccountException;
 import com.app.zinkworks.account.model.Account;
 import com.app.zinkworks.account.model.request.AccountRequest;
+import com.app.zinkworks.account.model.request.RollBackWithdrawRequest;
 import com.app.zinkworks.account.model.request.WithdrawAmountRequest;
 import com.app.zinkworks.account.model.response.BalanceResponse;
 import com.app.zinkworks.account.model.response.WithdrawAmountResponse;
@@ -27,14 +28,10 @@ public class AccountController {
 	
 	@PostMapping(value = "/account/balance", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<BalanceResponse> getBalance(@RequestBody AccountRequest balanceRequest
-	//public ResponseEntity<String> getBalance(@RequestBody Integer accountNumber
+	public ResponseEntity<BalanceResponse> getBalance(@RequestBody AccountRequest balanceRequest	
 			)		throws AccountException {
 		
-		return accountService.getBalance(balanceRequest.getAccountNumber(),balanceRequest.getPin());
-		//return new ResponseEntity<>("Successful",HttpStatus.OK);
-		//return "Success";
-
+		return accountService.getBalance(balanceRequest);
 	}
 	
 	@PostMapping(value = "/account/withdrawal", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
@@ -42,7 +39,16 @@ public class AccountController {
 	public ResponseEntity<WithdrawAmountResponse> withdrawAmount(@RequestBody WithdrawAmountRequest withdrawAmountRequest	
 			)		throws AccountException {
 		
-		return accountService.withdrawAmount(withdrawAmountRequest.getAccountNumber(),withdrawAmountRequest.getPin(),withdrawAmountRequest.getAmount());		
+		return accountService.withdrawAmount(withdrawAmountRequest);		
+
+	}
+	
+	@PostMapping(value = "/account/rollback/withdrawal", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<BalanceResponse> withdrawAmount(@RequestBody RollBackWithdrawRequest rollBackWithdrawRequest	
+			)		throws AccountException {
+		
+		return accountService.rollbackWithdrawal(rollBackWithdrawRequest);		
 
 	}
 

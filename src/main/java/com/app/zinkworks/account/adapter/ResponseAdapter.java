@@ -9,8 +9,7 @@ import com.app.zinkworks.account.exception.AccountException;
 @Service
 public class ResponseAdapter {
 	public <T> ResponseEntity<T> buildResponse(T response) {
-		//GenericResponse<T> response200 = new GenericResponse<>();
-		//response200.setResponseBody(response);
+		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	

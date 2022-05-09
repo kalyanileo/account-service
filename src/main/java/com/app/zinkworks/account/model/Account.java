@@ -31,7 +31,7 @@ public class Account {
 	@JsonProperty("AccountNumber")
 	@Id
 	@Column
-	private Integer accountNumber;
+	private int accountNumber;
 	
 	@JsonProperty("Type")
 	@Column
@@ -45,6 +45,10 @@ public class Account {
 	@Column
     private BigDecimal overdraft;
 	
+	@JsonProperty("OverdraftLimit")
+	@Column
+    private BigDecimal overdraftLimit;
+	
 	@JsonProperty("Status")
 	@Column
 	private String status;
@@ -53,14 +57,14 @@ public class Account {
 	@Column
 	private int pin;
 	
-	@JsonProperty("CreatedDate")
+	@JsonProperty("CreateDate")
 	@CreationTimestamp
     @Column(updatable = false)
-    private Timestamp createdDate;
+    private Timestamp createDate;
 	
-	@JsonProperty("LastModifiedDate")
+	@JsonProperty("UpdateDate")
     @UpdateTimestamp
     @Column
-    private Timestamp lastModifiedDate;
+    private Timestamp updateDate;
 	
 }

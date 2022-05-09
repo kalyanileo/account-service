@@ -33,16 +33,8 @@ public class WithdrawAmountResponse {
 	@JsonProperty("NewBalance")
     private BigDecimal newBalance;
 	
-	@JsonProperty("ReturnCode")
-    private String returnCode;
-	
-	@JsonProperty("Message")
-    private String message;
-	
 	@JsonProperty("WithdrawAmount")
     private BigDecimal withdrawAmount;
-	
-	@JsonProperty("Success")
-    private boolean success = true;
+
 
 }

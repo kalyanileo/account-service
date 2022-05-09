@@ -34,6 +34,7 @@ public class AccountRepositoryTest {
                 .pin(1234)
                 .balance(new BigDecimal(800))
                 .overdraft(new BigDecimal(200))
+                .overdraftLimit(new BigDecimal(200))
                 .build());
 
 		accountRepository.save(
@@ -43,6 +44,7 @@ public class AccountRepositoryTest {
                 .pin(4321)
                 .balance(new BigDecimal(1230))
                 .overdraft(new BigDecimal(150))
+                .overdraftLimit(new BigDecimal(150))
                 .build());
 		List<Account> accounts = accountRepository.findAll();
 		assertEquals(2,accounts.size());
@@ -57,6 +59,7 @@ public class AccountRepositoryTest {
                 .pin(1234)
                 .balance(new BigDecimal(800))
                 .overdraft(new BigDecimal(200))
+                .overdraftLimit(new BigDecimal(200))
                 .build());
 
 		accountRepository.save(
@@ -66,9 +69,10 @@ public class AccountRepositoryTest {
                 .pin(4321)
                 .balance(new BigDecimal(1230))
                 .overdraft(new BigDecimal(150))
+                .overdraftLimit(new BigDecimal(200))
                 .build());
-		Account account = accountRepository.findById(123456789).get();		
-		assertEquals(Integer.valueOf(123456789),account.getAccountNumber());
+		Account account = accountRepository.findById(Integer.valueOf(123456789)).get();		
+		assertEquals(123456789,account.getAccountNumber());
 	}
 }
 	

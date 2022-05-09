@@ -45,9 +45,10 @@ public class AccountControllerTest {
 	@Test
 	public void checkGetBalanceSuccess() throws Exception {
 		
-		AccountRequest accountRequest = new AccountRequest();
-		accountRequest.setAccountNumber(123456789);
-		accountRequest.setPin(1234);
+		AccountRequest accountRequest = AccountRequest.builder()
+										.accountNumber(123456789)
+										.pin(1234)
+										.build();
 		
 		ObjectMapper mapper = new ObjectMapper();  
 		
@@ -56,12 +57,13 @@ public class AccountControllerTest {
 				.content(mapper.writeValueAsString(accountRequest))
 				.contentType(MediaType.APPLICATION_JSON_VALUE);
 		
-		BalanceResponse balanceResponse = new BalanceResponse();
-		balanceResponse.setAccountNumber(123456789);
-		balanceResponse.setBalance(new BigDecimal(800));
-		balanceResponse.setOverDraft(new BigDecimal(200));
+		BalanceResponse balanceResponse = BalanceResponse.builder()
+										  .accountNumber(123456789)
+										  .balance(new BigDecimal(800))
+										  .maxWithdrawalAmount(new BigDecimal(1000))
+										  .build();
 		
-		when(accountService.getBalance(123456789,1234)).thenReturn(new ResponseEntity<>(balanceResponse, HttpStatus.OK));		
+		when(accountService.getBalance(accountRequest)).thenReturn(new ResponseEntity<>(balanceResponse, HttpStatus.OK));		
 		
 		MvcResult result = mockMvc.perform(request)
 				.andExpect(status().isOk())				
@@ -74,10 +76,11 @@ public class AccountControllerTest {
 	@Test
 	public void checkWithdrawAmount() throws Exception {
 		
-		WithdrawAmountRequest withdrawAmountRequest = new WithdrawAmountRequest();
-		withdrawAmountRequest.setAccountNumber(123456789);
-		withdrawAmountRequest.setAmount(new BigDecimal(200));		
-		withdrawAmountRequest.setPin(1234);
+		WithdrawAmountRequest withdrawAmountRequest = WithdrawAmountRequest.builder()
+													  .accountNumber(123456789)
+													  .amount(new BigDecimal(200))
+													  .pin(1234)
+													  .build();
 		
 		ObjectMapper mapper = new ObjectMapper();  
 		
@@ -86,14 +89,15 @@ public class AccountControllerTest {
 				.content(mapper.writeValueAsString(withdrawAmountRequest))
 				.contentType(MediaType.APPLICATION_JSON_VALUE);
 		
-		WithdrawAmountResponse withdrawAmountResponse = new WithdrawAmountResponse();
-		withdrawAmountResponse.setAccountNumber(123456789);
-		withdrawAmountResponse.setNewBalance(new BigDecimal(600));
-		withdrawAmountResponse.setNewOverdraft(new BigDecimal(200));
-		withdrawAmountResponse.setPrevBalance(new BigDecimal(800));
-		withdrawAmountResponse.setPrevOverdraft(new BigDecimal(200));
+		WithdrawAmountResponse withdrawAmountResponse = WithdrawAmountResponse.builder()
+														.accountNumber(123456789)
+														.newBalance(new BigDecimal(600))
+														.newOverdraft(new BigDecimal(200))
+														.prevBalance(new BigDecimal(800))
+														.prevOverdraft(new BigDecimal(200))
+														.build();
 		
-		when(accountService.withdrawAmount(123456789,1234,new BigDecimal(200))).thenReturn(new ResponseEntity<>(withdrawAmountResponse, HttpStatus.OK));		
+		when(accountService.withdrawAmount(withdrawAmountRequest)).thenReturn(new ResponseEntity<>(withdrawAmountResponse, HttpStatus.OK));		
 		
 		MvcResult result = mockMvc.perform(request)
 				.andExpect(status().isOk())				
